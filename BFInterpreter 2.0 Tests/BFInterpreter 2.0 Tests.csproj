@@ -58,12 +58,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CodeTest.cs" />
-    <Compile Include="FileReaderTest.cs" />
-    <Compile Include="InterpreterTest.cs" />
+    <Compile Include="Core\Code\CodeTest.cs" />
+    <Compile Include="Core\File\FileReaderTest.cs" />
+    <Compile Include="Core\Interpreter\InterpreterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StackTest.cs" />
-    <Compile Include="TapeTest.cs" />
+    <Compile Include="Core\Stack\StackTest.cs" />
+    <Compile Include="Core\Tape\TapeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BFInterpreter 2.0\BFInterpreter 2.0.csproj">

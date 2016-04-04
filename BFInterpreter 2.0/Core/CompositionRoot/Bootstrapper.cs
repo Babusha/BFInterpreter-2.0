@@ -16,6 +16,7 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
         public static void InitializeBuilder()
         {
             Builder = new ContainerBuilder();
+
         }
 
         public static bool IsBuilded { get; set; }

@@ -60,10 +60,10 @@
     <Compile Include="Core\File\IFileProvider.cs" />
     <Compile Include="Core\Exceptions\InvalidFileExtensionException.cs" />
     <Compile Include="Core\File\IFileReader.cs" />
-    <Compile Include="Core\Runtime\Interpreter\IInputOutput.cs" />
+    <Compile Include="Core\Runtime\InputOutput\IInputOutput.cs" />
+    <Compile Include="Core\Runtime\InputOutput\InputOutput.cs" />
     <Compile Include="Core\Runtime\Interpreter\IInterpreter.cs" />
     <Compile Include="Core\Runtime\Interpreter\IMachine.cs" />
-    <Compile Include="Core\Runtime\Interpreter\InputOutput.cs" />
     <Compile Include="Core\Runtime\Interpreter\Interpreter.cs" />
     <Compile Include="Core\Runtime\Interpreter\Machine.cs" />
     <Compile Include="Core\Stack\IStack.cs" />

@@ -2,7 +2,7 @@
 
 namespace BFInterpreter_2._0.Core.Runtime.InputOutput
 {
-    public class InputOutput
+    public class InputOutput : IInputOutput
     {
         public void Output(char character)
         {

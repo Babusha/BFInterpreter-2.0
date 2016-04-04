@@ -12,6 +12,7 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
     {
         static void Main(string[] args)
         {
+            args = new string[] { "hello.bf" };
             Bootstrapper.InitializeBuilder();
 
             // FileReader
@@ -21,25 +22,25 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
 
             Bootstrapper.Builder
                 .Register(c => new FileProvider(Bootstrapper
-                    .Container.Resolve<IFile>()))
+                    .GetService<IFile>()))
                 .As<IFileProvider>();
 
+            Bootstrapper.InitializeBuilder();
             Bootstrapper.Builder
-                .Register(c => new FileReader(Bootstrapper.Container
-                    .Resolve<IFileProvider>()))
+                .Register(c => new FileReader(Bootstrapper.GetService
+                    <IFileProvider>()))
                 .As<IFileReader>();
-
 
             // Code
             Bootstrapper.Builder
-                .Register(c => new SyntaxAnalyzer(Bootstrapper.Container
-                    .Resolve<IFileReader>()
+                .Register(c => new SyntaxAnalyzer(Bootstrapper.GetService
+                    <IFileReader>()
                     .Text()))
                 .As<ISyntaxAnalyzer>();
 
             Bootstrapper.Builder
-                .Register(c => new Code.Code(Bootstrapper.Container
-                    .Resolve<ISyntaxAnalyzer>()))
+                .Register(c => new Code.Code(Bootstrapper.GetService
+                    <ISyntaxAnalyzer>()))
                 .As<ICode>();
 
             // Stack
@@ -48,8 +49,8 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
                 .As<IStackElems>();
 
             Bootstrapper.Builder
-                .Register(c => new Stack.Stack(Bootstrapper.Container
-                    .Resolve<IStackElems>()))
+                .Register(c => new Stack.Stack(Bootstrapper.GetService
+                    <IStackElems>()))
                 .As<IStack>();
 
             // Tape
@@ -58,8 +59,8 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
                 .As<ITapeMemory>();
 
             Bootstrapper.Builder
-                .Register(c => new Tape.Tape(Bootstrapper.Container
-                    .Resolve<ITapeMemory>()))
+                .Register(c => new Tape.Tape(Bootstrapper.GetService
+                    <ITapeMemory>()))
                 .As<ITape>();
 
             // InputOutput
@@ -67,28 +68,28 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
                 .RegisterType<InputOutput>()
                 .As<IInputOutput>();
 
-            // Machine
-            var inputOutput = Bootstrapper.Container
-                .Resolve<IInputOutput>();
-
-            var tape = Bootstrapper.Container
-                .Resolve<ITape>();
-
-            var stack = Bootstrapper.Container
-                .Resolve<IStack>();
-
-            var code = Bootstrapper.Container
-                .Resolve<ICode>();
-
             Bootstrapper.Builder
-                .Register(c => new Machine(inputOutput,
-                    tape,
-                    stack,
-                    code))
+                .Register(c => new Machine(Bootstrapper.GetService
+                    <IInputOutput>(),
+                    Bootstrapper.GetService
+                        <ITape>(),
+                    Bootstrapper.GetService
+                        <IStack>(),
+                    Bootstrapper.GetService
+                        <ICode>()))
                 .As<IMachine>();
 
+            // Interpreter
+            Bootstrapper.Builder
+                .Register(c => new Interpreter(Bootstrapper.GetService
+                    <IMachine>()))
+                .As<IInterpreter>();
             Bootstrapper.SetAutofacContainer();
 
+            var interpreter = Bootstrapper.GetService
+                <IInterpreter>();
+
+            interpreter.Run();
         }
     }
 }

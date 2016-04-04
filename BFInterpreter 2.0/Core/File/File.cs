@@ -3,5 +3,10 @@
     public class File : IFile
     {
         public string Path { get; set; }
+
+        public File(string path)
+        {
+            Path = path;
+        }
     }
 }

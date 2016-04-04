@@ -51,6 +51,7 @@
     <Compile Include="Core\Code\ICode.cs" />
     <Compile Include="Core\Code\ISyntaxAnalyzer.cs" />
     <Compile Include="Core\Code\SyntaxAnalyzer.cs" />
+    <Compile Include="Core\CompositionRoot\Bootstrapper.cs" />
     <Compile Include="Core\Exceptions\StackEmptyException.cs" />
     <Compile Include="Core\File\File.cs" />
     <Compile Include="Core\File\FileProvider.cs" />
@@ -59,12 +60,12 @@
     <Compile Include="Core\File\IFileProvider.cs" />
     <Compile Include="Core\Exceptions\InvalidFileExtensionException.cs" />
     <Compile Include="Core\File\IFileReader.cs" />
-    <Compile Include="Core\Interpreter\IInputOutput.cs" />
-    <Compile Include="Core\Interpreter\IInterpreter.cs" />
-    <Compile Include="Core\Interpreter\IMachine.cs" />
-    <Compile Include="Core\Interpreter\InputOutput.cs" />
-    <Compile Include="Core\Interpreter\Interpreter.cs" />
-    <Compile Include="Core\Interpreter\Machine.cs" />
+    <Compile Include="Core\Runtime\Interpreter\IInputOutput.cs" />
+    <Compile Include="Core\Runtime\Interpreter\IInterpreter.cs" />
+    <Compile Include="Core\Runtime\Interpreter\IMachine.cs" />
+    <Compile Include="Core\Runtime\Interpreter\InputOutput.cs" />
+    <Compile Include="Core\Runtime\Interpreter\Interpreter.cs" />
+    <Compile Include="Core\Runtime\Interpreter\Machine.cs" />
     <Compile Include="Core\Stack\IStack.cs" />
     <Compile Include="Core\Stack\IStackElems.cs" />
     <Compile Include="Core\Stack\Stack.cs" />
@@ -73,14 +74,16 @@
     <Compile Include="Core\Tape\ITape.cs" />
     <Compile Include="Core\Tape\Tape.cs" />
     <Compile Include="Core\Tape\TapeMemory.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Core\CompositionRoot\Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Runtime\Compiller\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

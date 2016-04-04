@@ -14,26 +14,6 @@ namespace BFInterpreter_2._0.Core.Code
         public Code(ISyntaxAnalyzer syntaxAnalyzer)
         {
             Commands = syntaxAnalyzer.Code.ToList();
-            var cleared = new List<char>();
-            foreach (var command in Commands)
-            {
-                if (command != '+' &&
-                    command != '-' &&
-                    command != '>' &&
-                    command != '<' &&
-                    command != '.' &&
-                    command != ',' &&
-                    command != '[' &&
-                    command != ']')
-                {
-                    continue;
-                }
-                else
-                {
-                    cleared.Add(command);
-                }
-            }
-            Commands = cleared;
         }
 
         public void Next()
@@ -63,9 +43,9 @@ namespace BFInterpreter_2._0.Core.Code
             Pointer = pointer;
         }
 
-        public uint CurrentCommand()
+        public char CurrentCommand()
         {
-            return Commands[(int)Pointer];
+            return Commands[(int) Pointer];
         }
 
         public bool Ends()
@@ -75,3 +55,4 @@ namespace BFInterpreter_2._0.Core.Code
 
     }
 }
+ 

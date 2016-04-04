@@ -8,9 +8,9 @@ namespace BFInterpreter_2._0.Core.File
     {
         public IFile File { get; set; }
 
-        public FileProvider(IFile fileP)
+        public FileProvider(IFile file)
         {
-            File = File;
+            File = file;
         }
         public bool Exists()
         {

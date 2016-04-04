@@ -1,4 +1,4 @@
-﻿namespace BFInterpreter_2._0.Core.Interpreter
+﻿namespace BFInterpreter_2._0.Core.Runtime.InputOutput
 {
     public interface IInputOutput
     {

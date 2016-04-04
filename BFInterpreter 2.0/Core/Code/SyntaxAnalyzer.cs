@@ -9,25 +9,36 @@ namespace BFInterpreter_2._0.Core.Code
 {
     public class SyntaxAnalyzer : ISyntaxAnalyzer
     {
-        public char[] Code
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public char[] Code { get; set; }
         public SyntaxAnalyzer(string programText)
         {
-            throw new NotImplementedException();
+            Code = programText.ToCharArray();
+            Clean();
         }
 
-        public void Clean()
+        private void Clean()
         {
-            throw new NotImplementedException();
+            var cleaned = new List<char>();
+            foreach (var item in Code)
+            {
+                if (item != '+' ||
+                    item != '-' ||
+                    item != '>' ||
+                    item != '<' ||
+                    item != '.' ||
+                    item != ',' ||
+                    item != '[' ||
+                    item != ']')
+                {
+                    continue;
+                }
+                else
+                {
+                    cleaned.Add(item);
+                }
+            }
+
+            Code = cleaned.ToArray();
         }
 
     }

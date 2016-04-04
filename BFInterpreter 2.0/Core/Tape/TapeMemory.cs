@@ -8,7 +8,7 @@ namespace BFInterpreter_2._0.Core.Tape
         public short[] Data { get; set; }
         public TapeMemory()
         {
-            Data = Enumerable.Repeat((short)0, UInt16.MaxValue).ToArray();
+            Data = Enumerable.Repeat((short) 0, UInt16.MaxValue).ToArray();
         }
     }
 }

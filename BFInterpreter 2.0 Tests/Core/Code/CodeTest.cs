@@ -16,7 +16,7 @@ namespace BFInterpreter_2._0_Tests
         [Test]
         public void Constructor_PassMessedCode_NoExceptions()
         {
-            var syntaxAnalyzer = Mock.Of<ISyntaxAnalyzer>(property => property.Code == "+;lk34mocmt++-=-=-=-fzfsf".ToCharArray());
+            var syntaxAnalyzer = new SyntaxAnalyzer("lk34mocmt++ -=-=-= -fzfsf");
             var code = new Code(syntaxAnalyzer);
             bool notCleanedCode = true;
             foreach (var command in code.Commands)
@@ -43,7 +43,7 @@ namespace BFInterpreter_2._0_Tests
         [Test]
         public void JumpTo_PointerEqualsTwo_JumpToTwo()
         {
-            var syntaxAnalyzer = Mock.Of<ISyntaxAnalyzer>(property => property.Code == "+;lk34mocmt++-=-=-=-fzfsf".ToCharArray());
+            var syntaxAnalyzer = new SyntaxAnalyzer("lk34mocmt+++ -=-=-= -fzfsf");
             var code = new Code(syntaxAnalyzer);
             code.JumpTo(2);
             Assert.AreEqual(code.CurrentCommand(), '+');

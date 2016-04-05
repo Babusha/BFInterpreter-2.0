@@ -33,6 +33,7 @@ namespace BFInterpreter_2._0_Tests
             {
                 expectOutput += character.ToString();
             });
+
             Assert.Equals(expectOutput, "Hello World!");
         }
     }

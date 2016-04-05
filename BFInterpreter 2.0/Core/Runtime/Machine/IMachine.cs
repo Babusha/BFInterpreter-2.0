@@ -2,7 +2,7 @@
 using BFInterpreter_2._0.Core.Runtime.InputOutput;
 using BFInterpreter_2._0.Core.Tape;
 
-namespace BFInterpreter_2._0.Core.Runtime.Interpreter
+namespace BFInterpreter_2._0.Core.Runtime.Machine
 {
     public interface IMachine
     {

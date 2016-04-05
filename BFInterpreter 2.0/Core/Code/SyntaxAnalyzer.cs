@@ -21,13 +21,13 @@ namespace BFInterpreter_2._0.Core.Code
             var cleaned = new List<char>();
             foreach (var item in Code)
             {
-                if (item != '+' ||
-                    item != '-' ||
-                    item != '>' ||
-                    item != '<' ||
-                    item != '.' ||
-                    item != ',' ||
-                    item != '[' ||
+                if (item != '+' &&
+                    item != '-' &&
+                    item != '>' &&
+                    item != '<' &&
+                    item != '.' &&
+                    item != ',' &&
+                    item != '[' &&
                     item != ']')
                 {
                     continue;

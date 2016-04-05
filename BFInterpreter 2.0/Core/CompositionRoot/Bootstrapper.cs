@@ -16,6 +16,7 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
         public static void InitializeBuilder()
         {
             Builder = new ContainerBuilder();
+            IsBuilded = false;
 
         }
 
@@ -36,7 +37,16 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
 
         public static T GetService<T>(string name = null)
         {
-            return string.IsNullOrEmpty(name) ? Container.Resolve<T>() : Container.ResolveNamed<T>(name);
+            T result;
+            if (string.IsNullOrEmpty(name))
+            {
+                result = Container.Resolve<T>();
+            }
+            else
+            {   
+                result = Container.ResolveNamed<T>(name);
+            }
+            return result;
         }
     }
 }

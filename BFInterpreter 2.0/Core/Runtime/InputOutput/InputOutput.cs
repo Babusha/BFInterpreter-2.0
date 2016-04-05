@@ -6,7 +6,7 @@ namespace BFInterpreter_2._0.Core.Runtime.InputOutput
     {
         public void Output(char character)
         {
-            Console.WriteLine(character);
+            Console.Write(character);
         }
         public char Input()
         {

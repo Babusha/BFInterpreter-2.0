@@ -22,7 +22,11 @@ namespace BFInterpreter_2._0.Core.File
         }
         public string Text()
         {
-            return System.IO.File.ReadAllText(FileProvider.File.Path);
+            string text = System
+                .IO
+                .File
+                .ReadAllText(FileProvider.File.Path);
+            return text;
         }
     }
 }

@@ -16,7 +16,9 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
     {
         static void Main(string[] args)
         {
-            args = new string[] { "hello.bf" };
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            args = new[] { "hello.bf" };
+            
             Bootstrapper.InitializeBuilder();
 
             Bootstrapper.Builder
@@ -28,7 +30,9 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
                 .As<ITapeMemory>();
 
             Bootstrapper.Builder
-                .RegisterType<InputOutput>()
+                //.RegisterType<ConsoleReadKeyCharInput>()
+                //.RegisterType<ConsoleReadCharInput>()
+                .Register(c => new FileInputOutput("input.txt","output.txt"))
                 .As<IInputOutput>();
 
             Bootstrapper.Builder
@@ -56,7 +60,6 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
             Bootstrapper.Builder
                 .Register(c => new Tape.Tape(tapeMemory))
                 .As<ITape>();
-
             Bootstrapper.Builder
                .Register(c => new Stack.Stack(stackElems))
                .As<IStack>();
@@ -108,15 +111,23 @@ namespace BFInterpreter_2._0.Core.CompositionRoot
             Bootstrapper.InitializeBuilder();
 
             Bootstrapper.Builder
-                .Register(c => new Interpreter(machine))
+                //.Register(c => new Interpreter(machine))
+                .Register(c => new JITUnsafe(machine))
                 //.Register(c => new JIT(machine))
                 .As<IRuntime>();
             Bootstrapper.SetAutofacContainer();
 
             var interpreter = Bootstrapper.GetService
                 <IRuntime>();
-
+            
             interpreter.Run();
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            foreach (var character in $"\nTime: {0} seconds {elapsedMs/1000.0}".ToCharArray())
+            {
+                inputOutput.Output(character);
+            }
         }
     }
 }

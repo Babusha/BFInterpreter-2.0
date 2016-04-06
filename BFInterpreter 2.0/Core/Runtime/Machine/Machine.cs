@@ -83,7 +83,17 @@ namespace BFInterpreter_2._0.Core.Runtime.Machine
 
         public void Input()
         {
-            Tape.Value = (short) InputOutput.Input();
+            short input = (short) InputOutput.Input();
+            // in windows, hitting the enter key produces a carriage return and a
+            // line feed (CR+LF), but most brainfuck programs are designed to work
+            // with a line feed only, so we simply ignore the carriage return (13)
+            // also, EOF's are handled by doing nothing
+            if (input == 13)
+            {
+                input = 10;
+                InputOutput.Output('\n');
+            }
+            Tape.Value = input;
         }
     }
 }

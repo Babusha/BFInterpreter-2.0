@@ -147,10 +147,13 @@
     <Compile Include="Core\File\IFileProvider.cs" />
     <Compile Include="Core\Exceptions\InvalidFileExtensionException.cs" />
     <Compile Include="Core\File\IFileReader.cs" />
+    <Compile Include="Core\Runtime\InputOutput\ConsoleReadCharInput.cs" />
+    <Compile Include="Core\Runtime\InputOutput\FileInputOutput.cs" />
     <Compile Include="Core\Runtime\IRuntime.cs" />
     <Compile Include="Core\Runtime\InputOutput\IInputOutput.cs" />
-    <Compile Include="Core\Runtime\InputOutput\InputOutput.cs" />
+    <Compile Include="Core\Runtime\InputOutput\ConsoleReadKeyCharInput.cs" />
     <Compile Include="Core\Runtime\Interpreter\Interpreter.cs" />
+    <Compile Include="Core\Runtime\JIT\JITUnsafe.cs" />
     <Compile Include="Core\Runtime\JIT\JIT.cs" />
     <Compile Include="Core\Runtime\Machine\IMachine.cs" />
     <Compile Include="Core\Runtime\Machine\Machine.cs" />

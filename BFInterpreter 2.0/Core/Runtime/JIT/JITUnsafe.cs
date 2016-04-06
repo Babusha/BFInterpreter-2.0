@@ -1,7 +1,6 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -10,10 +9,10 @@ using Microsoft.CSharp;
 
 namespace BFInterpreter_2._0.Core.Runtime.JIT
 {
-    public class JIT : IRuntime
+    public class JITUnsafe : IRuntime
     {
         public IMachine Machine { get; set; }
-        public JIT(IMachine machine)
+        public JITUnsafe(IMachine machine)
         {
             Machine = machine;
         }
@@ -21,13 +20,13 @@ namespace BFInterpreter_2._0.Core.Runtime.JIT
         {
             var compile = new Dictionary<char, string>
             {
-                {'+', "machine.Increment(); "},
-                {'-', "machine.Decrement(); "},
-                {'>', "machine.Next(); "},
-                {'<', "machine.Prev(); "},
-                {',', "machine.Input(); "},
-                {'.', "machine.Output(); "},
-                {'[', "while(!machine.Tape.Value.Equals(0)) { "},
+                {'>', "++stackPointer; "},
+                {'<', "--stackPointer; "},
+                {'+', "++(*stackPointer); "},
+                {'-', "--(*stackPointer); "},
+                {',', @"*stackPointer = (Byte) inputOutput.Input(); if(*stackPointer == 13) { *stackPointer = 10; inputOutput.Output('\n'); }"},
+                {'.', "inputOutput.Output((char) *stackPointer); "},
+                {'[', "while (*stackPointer != 0) { "},
                 {']', " }"}
             };
 
@@ -36,7 +35,10 @@ namespace BFInterpreter_2._0.Core.Runtime.JIT
                 .Aggregate(String.Empty,
                     (current, item) => current + compile[item] + "\n");
 
-            var compilerParameters = new CompilerParameters();
+            var compilerParameters = new CompilerParameters
+            {
+                CompilerOptions = "/unsafe"
+            };
 
             compilerParameters
                 .ReferencedAssemblies
@@ -57,11 +59,14 @@ namespace BFInterpreter_2._0.Core.Runtime.JIT
             code.Append("using System; \n");
             code.Append("namespace Brain { \n");
             code.Append("  public class Fuck { \n");
-            code.Append("       public static void Execute(BFInterpreter_2._0.Core.Runtime.Machine.Machine machine) {\n");
+            code.Append("       static unsafe Byte * stackPointer;");
+            code.Append("       public static unsafe void Execute(BFInterpreter_2._0.Core.Runtime.InputOutput.IInputOutput inputOutput) {\n");
+            code.Append($"          Byte * stack = stackalloc Byte[{UInt16.MaxValue}];");
+            code.Append("           stackPointer = stack;");
             code.Append("           " + codeEvaluate);
             code.Append("       }\n");
             code.Append("   }\n");
-            code.Append("}\n");
+            code.Append("}\n"); 
 
             var provider = new CSharpCodeProvider();
             CompilerResults result = provider
@@ -71,7 +76,8 @@ namespace BFInterpreter_2._0.Core.Runtime.JIT
                 .CompiledAssembly
                 .GetType("Brain.Fuck")
                 .GetMethod("Execute", BindingFlags.Static | BindingFlags.Public);
-            method.Invoke(result, new object[] { Machine });
+
+            method.Invoke(result, new object[] { Machine.InputOutput});
         }
     }
 }

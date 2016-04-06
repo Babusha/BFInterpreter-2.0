@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using BFInterpreter_2._0.Core.Tape;
-using Moq;
 using NUnit.Framework;
 
-namespace BFInterpreter_2._0_Tests
+namespace BFInterpreter_2._0_Tests.Core.Tape
 {
     [TestFixture]
     public class TapeTest
@@ -18,7 +12,7 @@ namespace BFInterpreter_2._0_Tests
         public void Next_PointerEqualsZero_ExpectPointerIncrement()
         {
             var tapeMemory = new TapeMemory();
-            var tape = new Tape(tapeMemory);
+            var tape = new _0.Core.Tape.Tape(tapeMemory);
             var before = tape.Pointer;
             tape.Next();
             var after = tape.Pointer;
@@ -29,7 +23,7 @@ namespace BFInterpreter_2._0_Tests
         public void Next_PointerEqualsToLastCellUintMaxValue_ExpectJumpToZero()
         {
             var tapeMemory = new TapeMemory();
-            var tape = new Tape(tapeMemory);
+            var tape = new _0.Core.Tape.Tape(tapeMemory);
             tape.Pointer = UInt32.MaxValue-1;;
             tape.Next();
             Assert.AreEqual(tape.Pointer, UInt16.MinValue);
@@ -39,7 +33,7 @@ namespace BFInterpreter_2._0_Tests
         public void Prev_PointerEqualsTwo_ExpectPointerDecrement()
         {
             var tapeMemory = new TapeMemory();
-            var tape = new Tape(tapeMemory);
+            var tape = new _0.Core.Tape.Tape(tapeMemory);
             var before = tape.Pointer;
             tape.Next();
             tape.Next();
@@ -52,7 +46,7 @@ namespace BFInterpreter_2._0_Tests
         public void Prev_PointerEqualsZero_ExpectJumpToLastCell()
         {
             var tapeMemory = new TapeMemory();
-            var tape = new Tape(tapeMemory);
+            var tape = new _0.Core.Tape.Tape(tapeMemory);
             tape.Prev();
             Assert.AreEqual(tape.Pointer, UInt16.MaxValue-1);
         }
@@ -61,7 +55,7 @@ namespace BFInterpreter_2._0_Tests
         public void Increment_CellEqualsZero_ExpectIncrementValue()
         {
             var tapeMemory = new TapeMemory();
-            var tape = new Tape(tapeMemory);
+            var tape = new _0.Core.Tape.Tape(tapeMemory);
             var before = tape.Value;
             tape.Increment();
             var after = tape.Value;
@@ -72,7 +66,7 @@ namespace BFInterpreter_2._0_Tests
         public void Increment_CellEqualsInt16Max_ExpectZero()
         {
             var tapeMemory = new TapeMemory();
-            var tape = new Tape(tapeMemory);
+            var tape = new _0.Core.Tape.Tape(tapeMemory);
             tape.Value = Int16.MaxValue;
             tape.Increment();
             Assert.AreEqual(tape.Value, Int16.MinValue);
@@ -82,7 +76,7 @@ namespace BFInterpreter_2._0_Tests
         public void Increment_CellEqualsZero_ExpectInt16Min()
         {
             var tapeMemory = new TapeMemory();
-            var tape = new Tape(tapeMemory);
+            var tape = new _0.Core.Tape.Tape(tapeMemory);
             tape.Value = Int16.MinValue;
             tape.Decrement();
             Assert.AreEqual(tape.Value, Int16.MaxValue);

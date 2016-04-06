@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BFInterpreter_2._0.Core.Code;
 using BFInterpreter_2._0.Core.Runtime.InputOutput;
-using BFInterpreter_2._0.Core.Runtime.Interpreter;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
-namespace BFInterpreter_2._0_Tests
+namespace BFInterpreter_2._0_Tests.Core.Interpreter
 {
     [TestFixture]
     public class InterpreterTest

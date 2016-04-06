@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using BFInterpreter_2._0.Core;
+﻿using System.IO;
 using BFInterpreter_2._0.Core.Exceptions;
 using BFInterpreter_2._0.Core.File;
 using Moq;
 using NUnit.Framework;
 
-namespace BFInterpreter_2._0_Tests
+namespace BFInterpreter_2._0_Tests.Core.File
 {
     [TestFixture]
     public class FileReaderTest

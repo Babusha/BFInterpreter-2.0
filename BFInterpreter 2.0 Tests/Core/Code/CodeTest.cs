@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BFInterpreter_2._0.Core.Code;
-using Moq;
+﻿using BFInterpreter_2._0.Core.Code;
 using NUnit.Framework;
 
-namespace BFInterpreter_2._0_Tests
+namespace BFInterpreter_2._0_Tests.Core.Code
 {
     [TestFixture]
     public class CodeTest
@@ -17,7 +11,7 @@ namespace BFInterpreter_2._0_Tests
         public void Constructor_PassMessedCode_NoExceptions()
         {
             var syntaxAnalyzer = new SyntaxAnalyzer("lk34mocmt++ -=-=-= -fzfsf");
-            var code = new Code(syntaxAnalyzer);
+            var code = new _0.Core.Code.Code(syntaxAnalyzer);
             bool notCleanedCode = true;
             foreach (var command in code.Commands)
             {
@@ -44,7 +38,7 @@ namespace BFInterpreter_2._0_Tests
         public void JumpTo_PointerEqualsTwo_JumpToTwo()
         {
             var syntaxAnalyzer = new SyntaxAnalyzer("lk34mocmt+++ -=-=-= -fzfsf");
-            var code = new Code(syntaxAnalyzer);
+            var code = new _0.Core.Code.Code(syntaxAnalyzer);
             code.JumpTo(2);
             Assert.AreEqual(code.CurrentCommand(), '+');
         }

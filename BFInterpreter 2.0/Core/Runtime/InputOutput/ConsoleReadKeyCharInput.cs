@@ -2,7 +2,8 @@
 
 namespace BFInterpreter_2._0.Core.Runtime.InputOutput
 {
-    public class InputOutput : IInputOutput
+
+    public class ConsoleReadKeyCharInput : IInputOutput
     {
         public void Output(char character)
         {
@@ -10,7 +11,7 @@ namespace BFInterpreter_2._0.Core.Runtime.InputOutput
         }
         public char Input()
         {
-            return (char) Console.Read();
+            return Console.ReadKey().KeyChar;
         }
     }
 }

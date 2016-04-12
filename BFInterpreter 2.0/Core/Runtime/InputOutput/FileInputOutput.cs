@@ -21,11 +21,13 @@ namespace BFInterpreter_2._0.Core.Runtime.InputOutput
         public void Output(char character)
         {
             using (var fileStream = new FileStream(OutputPath,
-                        FileMode.Append,
-                        FileAccess.Write))
-            using (var sw = new StreamWriter(fileStream))
+                    FileMode.Append,
+                    FileAccess.Write))
             {
-                sw.Write(character);
+                using (var sw = new StreamWriter(fileStream))
+                {
+                    sw.Write(character);
+                }
             }
         }
 

@@ -19,22 +19,40 @@ namespace BFInterpreter_2._0.Core.Runtime.JIT
         }
         public void Run()
         {
-            var compile = new Dictionary<char, string>
+            var compile = new StringBuilder();
+            foreach (var item in Machine.Code.Commands)
             {
-                {'+', "machine.Increment(); "},
-                {'-', "machine.Decrement(); "},
-                {'>', "machine.Next(); "},
-                {'<', "machine.Prev(); "},
-                {',', "machine.Input(); "},
-                {'.', "machine.Output(); "},
-                {'[', "while(!machine.Tape.Value.Equals(0)) { "},
-                {']', " }"}
-            };
+                switch (item)
+                {
+                    case '+':
+                        compile.Append("machine.Increment();");
+                        break;
+                    case '-':
+                        compile.Append("machine.Decrement();   ");
+                        break;
+                    case '>':
+                        compile.Append("machine.Next(); ");
+                        break;
+                    case '<':
+                        compile.Append("machine.Prev(); ");
+                        break;
+                    case '.':
+                        compile.Append("machine.Output();");
+                        break;
+                    case ',':
+                        compile.Append("machine.Input();");
+                        break;
+                    case '[':
+                        compile.Append("while(!machine.Tape.Value.Equals(0)) {");
+                        break;
+                    case ']':
+                        compile.Append(" }");
+                        break;
 
-            string codeEvaluate = Machine.Code
-                .Commands
-                .Aggregate(String.Empty,
-                    (current, item) => current + compile[item] + "\n");
+                }
+
+            }
+            var codeEvaluate = compile.ToString();
 
             var compilerParameters = new CompilerParameters();
 
@@ -58,7 +76,7 @@ namespace BFInterpreter_2._0.Core.Runtime.JIT
             code.Append("namespace Brain { \n");
             code.Append("  public class Fuck { \n");
             code.Append("       public static void Execute(BFInterpreter_2._0.Core.Runtime.Machine.Machine machine) {\n");
-            code.Append("           " + codeEvaluate);
+            code.Append(codeEvaluate);
             code.Append("       }\n");
             code.Append("   }\n");
             code.Append("}\n");

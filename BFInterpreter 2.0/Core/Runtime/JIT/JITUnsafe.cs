@@ -18,22 +18,41 @@ namespace BFInterpreter_2._0.Core.Runtime.JIT
         }
         public void Run()
         {
-            var compile = new Dictionary<char, string>
+            var compile = new StringBuilder();
+            foreach (var item in Machine.Code.Commands)
             {
-                {'>', "++stackPointer; "},
-                {'<', "--stackPointer; "},
-                {'+', "++(*stackPointer); "},
-                {'-', "--(*stackPointer); "},
-                {',', @"*stackPointer = (Byte) inputOutput.Input(); if(*stackPointer == 13) { *stackPointer = 10; inputOutput.Output('\n'); }"},
-                {'.', "inputOutput.Output((char) *stackPointer); "},
-                {'[', "while (*stackPointer != 0) { "},
-                {']', " }"}
-            };
+                switch (item)
+                {
+                    case '+':
+                        compile.Append("++(*tapePointer);");
+                        break;
+                    case '-':
+                        compile.Append("--(*tapePointer);  ");
+                        break;
+                    case '>':
+                        compile.Append("++tapePointer; ");
+                        break;
+                    case '<':
+                        compile.Append("--tapePointer; ");
+                        break;
+                    case '.':
+                        compile.Append("inputOutput.Output((char) *tapePointer); ");
+                        break;
+                    case ',':
+                        compile.Append(
+                            @"*tapePointer = (Byte) inputOutput.Input(); if(*tapePointer == 13) { *tapePointer = 10; inputOutput.Output('\n'); }");
+                        break;
+                    case '[':
+                        compile.Append("while (*tapePointer != 0) { ");
+                        break;
+                    case ']':
+                        compile.Append(" }");
+                        break;
 
-            string codeEvaluate = Machine.Code
-                .Commands
-                .Aggregate(String.Empty,
-                    (current, item) => current + compile[item] + "\n");
+                }
+                
+            }
+            var codeEvaluate = compile.ToString();
 
             var compilerParameters = new CompilerParameters
             {
@@ -55,18 +74,17 @@ namespace BFInterpreter_2._0.Core.Runtime.JIT
                 .GenerateInMemory = true;
 
             var code = new StringBuilder();
-
             code.Append("using System; \n");
             code.Append("namespace Brain { \n");
             code.Append("  public class Fuck { \n");
-            code.Append("       static unsafe Byte * stackPointer;");
+            code.Append("       static unsafe Byte * tapePointer;");
             code.Append("       public static unsafe void Execute(BFInterpreter_2._0.Core.Runtime.InputOutput.IInputOutput inputOutput) {\n");
-            code.Append($"          Byte * stack = stackalloc Byte[{UInt16.MaxValue}];");
-            code.Append("           stackPointer = stack;");
-            code.Append("           " + codeEvaluate);
+            code.Append($"          Byte * tape = stackalloc Byte[30000];");
+            code.Append("           tapePointer = tape;");
+            code.Append(codeEvaluate);
             code.Append("       }\n");
             code.Append("   }\n");
-            code.Append("}\n"); 
+            code.Append("}\n");
 
             var provider = new CSharpCodeProvider();
             CompilerResults result = provider

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BFInterpreter 2.0", "BFInte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BFInterpreter 2.0 Tests", "BFInterpreter 2.0 Tests\BFInterpreter 2.0 Tests.csproj", "{F7A3B3A8-7D4F-4F6C-B444-14EF607ED867}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3174F7EE-6229-47CB-AFFB-7CFEC643106C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

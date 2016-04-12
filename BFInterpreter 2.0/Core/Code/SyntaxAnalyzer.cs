@@ -10,9 +10,9 @@ namespace BFInterpreter_2._0.Core.Code
     public class SyntaxAnalyzer : ISyntaxAnalyzer
     {
         public char[] Code { get; set; }
-        public SyntaxAnalyzer(string programText)
+        public SyntaxAnalyzer(IFileReader fileReader)
         {
-            Code = programText.ToCharArray();
+            Code = fileReader.Text().ToCharArray();
             Clean();
         }
 
